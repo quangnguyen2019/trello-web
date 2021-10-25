@@ -1,0 +1,52 @@
+@import '_setting';
+
+$header-footer-height: 44px;
+$list-bg-color: #ebecf0;
+
+.column {
+    flex-shrink: 0;
+    width: 300px;
+    height: calc(100% - #{$gap});
+    border-radius: 8px;
+    margin-left: $gap;
+
+    > * {
+        background-color: $list-bg-color;
+        padding: 0 8px;
+    }
+    header {
+        padding-left: 15px;
+        font-size: 16px;
+        font-weight: bold;
+        height: $header-footer-height;
+        line-height: $header-footer-height - 2px;
+        border-radius: 5px 5px 0 0;
+    }
+    footer {
+        padding-left: 15px;
+        height: $header-footer-height;
+        line-height: $header-footer-height - 2px;
+        border-radius: 0 0 5px 5px;
+    }
+    .tasks-list {
+        list-style: none;
+        margin: 0;
+        max-height: calc(100% - #{$header-footer-height} * 2);
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 15px;
+        }
+        &::-webkit-scrollbar-track {
+            background: #dadbe2;
+            border: 4px solid $list-bg-color;
+            border-radius: 10px;
+        }
+        &::-webkit-scrollbar-thumb {
+            background: darken($list-bg-color, 15);
+            border: solid $list-bg-color;
+            border-width: 0 4px;
+            border-radius: 10px;
+        }
+    }
+}
