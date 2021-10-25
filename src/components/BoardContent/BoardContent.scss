@@ -1,0 +1,22 @@
+@import '_setting';
+
+.board-content {
+    display: flex;
+    overflow-x: auto;
+
+    &::-webkit-scrollbar {
+        height: 12px;
+    }
+    &::-webkit-scrollbar-track {
+        background: rgba(68, 68, 68, 0.15);
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-thumb {
+        background: rgba(225, 225, 225,.7);
+        border: 1px solid $board-bg-color;
+        border-radius: 10px;
+    }
+    &::-webkit-scrollbar-button {
+        display: block;
+    }
+}
