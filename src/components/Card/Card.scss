@@ -1,6 +1,6 @@
 @import '_setting';
 
-.task-item {
+.card-item {
     background-color: #fff;
     padding: $gap;
     border-radius: 4px;
@@ -9,7 +9,7 @@
     &:not(:last-child) {
         margin-bottom: $gap;
     }
-    .task-img {
+    .card-img {
         display: block;
         height: 165px;
         margin: -$gap (-$gap) 0;

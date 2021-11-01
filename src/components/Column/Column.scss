@@ -28,7 +28,7 @@ $list-bg-color: #ebecf0;
         line-height: $header-footer-height - 2px;
         border-radius: 0 0 5px 5px;
     }
-    .tasks-list {
+    .card-list {
         list-style: none;
         margin: 0;
         max-height: calc(100% - #{$header-footer-height} * 2);
