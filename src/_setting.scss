@@ -2,5 +2,10 @@
 
 $gap: 10px;
 
+// Height: AppBar + BoardBar + BoardContent = 100vh
+$navbar-app-height: 40px;
+$navbar-board-height: 50px;
+$board-content-height: calc(100vh - 100px); // 100px=40px+50px+10px (10px: bottom space for scrollbar)
+
 // color
 $board-bg-color: #0079bf;
