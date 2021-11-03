@@ -2,15 +2,15 @@ import './Card.scss';
 
 export default function Card({ cardDetail }) {
     return (
-        <li className="card-item">
+        <div className="card-item">
             {   
                 cardDetail.cover && 
                 <span 
                     className="card-img" 
-                    style={{ background: `url(${cardDetail.cover})` }}>
+                    style={{ 'background-image': `url(${cardDetail.cover})` }}>
                 </span>
             }
-            <p> {cardDetail.title} </p>
-        </li>
+            <p className="card-title"> {cardDetail.title} </p>
+        </div>
     )
 }
