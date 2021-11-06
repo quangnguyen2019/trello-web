@@ -5,6 +5,7 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import Column from 'components/Column/Column';
 import { initialData } from 'actions/initialData';
 import { mapOrder } from 'utilities/sorts';
+import { applyDrag } from 'utilities/drag_drop';
 
 import './BoardContent.scss';
 
@@ -23,7 +24,26 @@ export default function BoardContent() {
     }, [])
 
     const onColumnDrop = (dropResult) => {
-        console.log(dropResult);
+        let newColumns = [...columns];
+        newColumns = applyDrag(newColumns, dropResult);
+
+        let newBoard = {...board};
+        newBoard.columnOrder = newColumns.map(col => col.id);
+        newBoard.columns = newColumns;
+
+        setColumns(newColumns);
+        setBoard(newBoard);
+    }
+
+    const onCardDrop = (columnId, dropResult) => {
+        if (dropResult.removedIndex !== null || dropResult.addedIndex !== null) {
+            let newColumns = [...columns]
+            let currentColumn = newColumns.find(col => col.id === columnId)
+            currentColumn.cards = applyDrag(currentColumn.cards, dropResult)
+            currentColumn.cardOrder = currentColumn.cards.map(card => card.id)
+
+            setColumns(newColumns);
+        }
     }
 
     if (isEmpty(board)) {
@@ -45,10 +65,14 @@ export default function BoardContent() {
             >
                 { columns.map((col, index) => 
                     <Draggable key={index}>
-                        <Column columns={col}/>
+                        <Column column={col} onCardDrop={onCardDrop} />
                     </Draggable>
                 )}
             </Container>
+            <div className="add-list">
+                <i class="fa fa-plus icon" /> 
+                <span> Add another list </span>
+            </div>
         </div>
     )
 }

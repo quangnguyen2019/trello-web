@@ -1,6 +1,7 @@
 @import '_setting';
 
 .board-content {
+    display: flex;
     height: $board-content-height;
     overflow-x: auto;
     overflow-y: hidden;
@@ -25,5 +26,32 @@
         background-color: rgba(150, 150, 200, 0.1);
         border: 1px dashed #abc;
         margin: 5px 45px 5px 5px;
-      }
+    }
+
+    .add-list {
+        display: flex;
+        align-items: center;
+        width: $column-width;
+        height: 42px;
+        color: #fff;
+        margin-left: $gap;
+        padding: 6px 10px 6px 20px;
+        background: rgba(255,255,255,.25);
+        cursor: pointer;
+        box-sizing: border-box;
+        border-radius: 5px;
+        text-shadow: 0 0 12px rgba(0,0,0,.6);
+        transition: all .15s;
+
+        &:hover {
+            background: rgba(255,255,255,.3);
+        }
+        &:active {
+            background: rgba(255,255,255,.4);
+        }
+
+        .icon {
+            margin-right: $gap;
+        }
+    }
 }

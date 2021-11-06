@@ -7,6 +7,9 @@ $app-bar-bg-color: #0067a3;
     padding-left: $gap;
     display: flex;
     align-items: center;
-    background-color: $app-bar-bg-color;
+    // background-color: $app-bar-bg-color;
+    background-color: rgba(0,0,0,.45);
+    backdrop-filter: blur(24px);
+    color: #fff;
     font-size: 1.5rem;
 }

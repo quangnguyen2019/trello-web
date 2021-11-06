@@ -6,7 +6,7 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
 
 .column {
     flex-shrink: 0;
-    width: 300px;
+    width: $column-width;
     height: $column-height;
     border-radius: 8px;
     margin-left: $gap;
@@ -15,6 +15,7 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
         background-color: $list-bg-color;
         padding: 0 8px;
     }
+
     header {
         padding-left: 15px;
         font-size: 16px;
@@ -23,12 +24,36 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
         line-height: $header-footer-height - 2px;
         border-radius: 5px 5px 0 0;
     }
+
     footer {
-        padding-left: 15px;
         height: $header-footer-height;
-        line-height: $header-footer-height - 2px;
+        // line-height: $header-footer-height - 2px;
         border-radius: 0 0 5px 5px;
+        color: #5e6c84;
+        display: flex;
+        align-items: center;
+        
+        .footer-actions {
+            cursor: pointer;
+            padding: 6px 10px;
+            margin-bottom: 4px;
+            width: 100%;
+            border-radius: 5px;
+            transition: all .15s;
+            
+            &:hover {
+                background-color: #091e4214;
+            }
+            &:active {
+                background-color: #091e4221;
+            }
+
+            .icon {
+                margin-right: 4px;
+            }
+        }
     }
+
     .card-list {
         list-style: none;
         margin: 0;
@@ -52,18 +77,20 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
 
         .card-ghost {
             transition: transform 0.18s ease;
-            transform: rotateZ(5deg)
+            transform: rotateZ(5deg);
+            font-weight: bold;
         }
-          
+        
         .card-ghost-drop{
             transition: transform 0.18s ease-in-out;
-            transform: rotateZ(0deg)
+            transform: rotateZ(0deg);
+            font-weight: bold;
         }
 
         .card-drop-preview {
             background-color: rgba(150, 150, 200, 0.1);
-            // border: 1px dashed #abc;
+            border: 1px dashed #abc;
             margin: 5px;
-          }
+        }
     }
 }
