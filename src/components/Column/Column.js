@@ -4,22 +4,18 @@ import { Container, Draggable } from 'react-smooth-dnd';
 import { mapOrder } from 'utilities/sorts';
 import './Column.scss';
 
-export default function Column({ columns }) {
-    const cards = mapOrder(columns.cards, columns.cardOrder, 'id');
-
-    const onCardDrop = (dropRelsult) => {
-        console.log("🚀 onCardDrop ~ dropRelsult", dropRelsult)
-    }
+export default function Column({ column, onCardDrop }) {
+    const cards = mapOrder(column.cards, column.cardOrder, 'id');
 
     return(
         <div className="column">
             <header className="column-drag-handle">
-                { columns.title }
+                { column.title }
             </header>
             <div className="card-list">
                 <Container
                     groupName="col"
-                    onDrop={onCardDrop}
+                    onDrop={dropResult => onCardDrop(column.id, dropResult)}
                     getChildPayload={index => cards[index]}
                     dragClass="card-ghost"
                     dropClass="card-ghost-drop"
@@ -37,7 +33,12 @@ export default function Column({ columns }) {
                     )}
                 </Container>
             </div>
-            <footer>Add another card</footer>
+            <footer>
+                <div className="footer-actions">
+                    <i class="fa fa-plus icon" /> 
+                    <span> Add another card </span>
+                </div>
+            </footer>
         </div>
     )
 }

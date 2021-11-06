@@ -6,8 +6,8 @@ export default function Card({ cardDetail }) {
             {   
                 cardDetail.cover && 
                 <span 
-                    className="card-img" 
-                    style={{ 'background-image': `url(${cardDetail.cover})` }}>
+                    className="card-img"
+                    style={{ backgroundImage: `url(${cardDetail.cover})` }}>
                 </span>
             }
             <p className="card-title"> {cardDetail.title} </p>
