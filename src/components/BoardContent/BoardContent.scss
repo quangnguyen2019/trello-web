@@ -6,6 +6,11 @@
     overflow-x: auto;
     overflow-y: hidden;
 
+    &::after {
+        content: '';
+        flex: 0 0 $gap;
+    }
+
     &::-webkit-scrollbar {
         height: 12px;
     }
@@ -14,12 +19,12 @@
         border-radius: 10px;
     }
     &::-webkit-scrollbar-thumb {
-        background: rgba(225, 225, 225,.7);
-        border: 1px solid $board-bg-color;
-        border-radius: 10px;
+        background: rgba(225, 225, 225,.5);
+        border-radius: 4px;
     }
     &::-webkit-scrollbar-button {
         display: block;
+        width: 4px;
     }
 
     .column-drop-preview {
@@ -28,30 +33,71 @@
         margin: 5px 45px 5px 5px;
     }
 
-    .add-list {
-        display: flex;
-        align-items: center;
-        width: $column-width;
-        height: 42px;
-        color: #fff;
-        margin-left: $gap;
-        padding: 6px 10px 6px 20px;
-        background: rgba(255,255,255,.25);
-        cursor: pointer;
-        box-sizing: border-box;
-        border-radius: 5px;
-        text-shadow: 0 0 12px rgba(0,0,0,.6);
-        transition: all .15s;
+    .container-add-column {
+        width: 300px;
+        margin: 0;
 
-        &:hover {
-            background: rgba(255,255,255,.3);
-        }
-        &:active {
-            background: rgba(255,255,255,.4);
+        .add-column {
+            display: flex;
+            width: $column-width;
+            height: 42px;
+            align-items: center;
+            color: #fff;
+            margin-left: $gap;
+            padding: 6px 10px 6px 20px;
+            background: rgba(255,255,255,.25);
+            cursor: pointer;
+            box-sizing: border-box;
+            border-radius: 5px;
+            text-shadow: 0 0 12px rgba(0,0,0,.6);
+            transition: all .15s;
+    
+            &:hover {
+                background: rgba(255,255,255,.3);
+            }
+            &:active {
+                background: rgba(255,255,255,.4);
+            }
+    
+            .icon-plus {
+                margin-right: $gap;
+            }
         }
 
-        .icon {
-            margin-right: $gap;
+        .form-add-column {
+            width: $column-width;
+            margin-left: $gap;
+            padding: 4px;
+            background: $column-bg-color;
+            box-sizing: border-box;
+            border-radius: 5px;
+
+            .form-control { // Class of Bootstrap
+                box-shadow: none;
+                margin-bottom: 5px
+            }
+
+            .actions {
+                display: flex;
+                align-items: center;
+                
+                .btn {  // Class of Bootstrap
+                    box-shadow: none;
+                    padding: 5px 13px;
+                }
+
+                .icon-remove {
+                    font-size: 20px;
+                    margin-left: 20px;
+                    opacity: .6;
+                    cursor: pointer;
+                    transition: all .15s;
+
+                    &:hover {
+                        opacity: .8;
+                    }
+                }
+            }
         }
     }
 }

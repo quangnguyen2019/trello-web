@@ -35,7 +35,7 @@ export default function Column({ column, onCardDrop }) {
             </div>
             <footer>
                 <div className="footer-actions">
-                    <i class="fa fa-plus icon" /> 
+                    <i className="fa fa-plus icon" /> 
                     <span> Add another card </span>
                 </div>
             </footer>

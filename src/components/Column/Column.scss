@@ -1,7 +1,6 @@
 @import '_setting';
 
 $header-footer-height: 44px;
-$list-bg-color: #ebecf0;
 $column-height: calc(#{$board-content-height} - #{$gap * 2});
 
 .column {
@@ -12,7 +11,7 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
     margin-left: $gap;
 
     > * {
-        background-color: $list-bg-color;
+        background-color: $column-bg-color;
         padding: 0 8px;
     }
 
@@ -65,12 +64,12 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
         }
         &::-webkit-scrollbar-track {
             background: #dadbe2;
-            border: 4px solid $list-bg-color;
+            border: 4px solid $column-bg-color;
             border-radius: 10px;
         }
         &::-webkit-scrollbar-thumb {
-            background: darken($list-bg-color, 15);
-            border: solid $list-bg-color;
+            background: darken($column-bg-color, 15);
+            border: solid $column-bg-color;
             border-width: 0 4px;
             border-radius: 10px;
         }
