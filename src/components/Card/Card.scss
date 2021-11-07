@@ -2,16 +2,18 @@
 
 .card-item {
     background-color: #fff;
-    padding: $gap;
     border-radius: 4px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, .1);
     cursor: pointer;
     margin-bottom: $gap;
+    
+    & > :not(.card-img) {
+        padding: $gap;
+    }
 
     .card-img {
         display: block;
         height: 165px;
-        margin: -$gap (-$gap) 8px;
         background-size: cover;
         background-position: center;
         border-radius: 5px 5px 0 0;

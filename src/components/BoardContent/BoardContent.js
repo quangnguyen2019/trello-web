@@ -1,6 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { isEmpty } from 'lodash';
 import { Container, Draggable } from 'react-smooth-dnd';
+import { 
+    Container as BootstrapContainer, Form, 
+    Row, Col, Button
+} from 'react-bootstrap';
 
 import Column from 'components/Column/Column';
 import { initialData } from 'actions/initialData';
@@ -12,6 +16,10 @@ import './BoardContent.scss';
 export default function BoardContent() {
     const [board, setBoard] = useState({});
     const [columns, setColumns] = useState([]);
+    const [isOpenNewColumnForm, setIsOpenNewColumnForm] = useState(false);
+    const [newColumnTitle, setNewColumnTitle] = useState("");
+
+    const inputEl = useRef(null);
 
     useEffect(() => {
         const boardsFromDB = initialData.boards.find(boardItem => boardItem.id === 'board-1');
@@ -22,6 +30,13 @@ export default function BoardContent() {
             );
         }
     }, [])
+
+    useEffect(() => {
+        if (inputEl.current) {
+            inputEl.current.focus()
+            inputEl.current.select()
+        }   
+    }, [isOpenNewColumnForm]);
 
     const onColumnDrop = (dropResult) => {
         let newColumns = [...columns];
@@ -44,6 +59,40 @@ export default function BoardContent() {
 
             setColumns(newColumns);
         }
+    }
+
+    const toggleOpenNewColumnForm = () => {
+        setIsOpenNewColumnForm(!isOpenNewColumnForm);
+    }
+
+    const changeNewColumnTitle = (e) => {
+        setNewColumnTitle(e.target.value);
+    }
+
+    const addNewColumn = () => {
+        if (!newColumnTitle) {
+            inputEl.current.focus();
+            return;
+        }
+
+        const newColumn = {
+            id: Math.random().toString(36).substr(2,5),
+            boardId: board.id,
+            title: newColumnTitle.trim(),
+            cardOrder: [],
+            cards: []
+        }
+
+        const newColumns = [...columns, newColumn];
+
+        let newBoard = {...board};
+        newBoard.columnOrder = newColumns.map(col => col.id);
+        newBoard.columns = newColumns;
+
+        setColumns(newColumns);
+        setBoard(newBoard);
+        setNewColumnTitle("");
+        setIsOpenNewColumnForm(false);
     }
 
     if (isEmpty(board)) {
@@ -69,10 +118,36 @@ export default function BoardContent() {
                     </Draggable>
                 )}
             </Container>
-            <div className="add-list">
-                <i class="fa fa-plus icon" /> 
-                <span> Add another list </span>
-            </div>
+            <BootstrapContainer className="container-add-column">
+                {
+                    isOpenNewColumnForm === false ?
+                    <Row>
+                        <Col className="add-column" onClick={toggleOpenNewColumnForm}>
+                            <i className="fa fa-plus icon-plus" /> 
+                            <span> Add another column </span>
+                        </Col>
+                    </Row> :
+                    <Row>
+                        <Col className="form-add-column">
+                            <Form.Control 
+                                ref={inputEl} 
+                                type="text" 
+                                placeholder="Enter column title..." 
+                                value={newColumnTitle}
+                                onChange={changeNewColumnTitle}
+                                onKeyPress={e => (e.key === 'Enter') && addNewColumn()}
+                            />
+                            <div className="actions">
+                                <Button size="sm" onClick={addNewColumn}> Add Column </Button>
+                                <i 
+                                    className="fa fa-times icon-remove" 
+                                    onClick={toggleOpenNewColumnForm} 
+                                />
+                            </div>
+                        </Col>
+                    </Row>
+                }
+            </BootstrapContainer>
         </div>
     )
 }
