@@ -19,3 +19,14 @@ body {
     padding-bottom: 12px;
     box-sizing: border-box;
 }
+
+.content-editable {
+    background-color: transparent;
+    border-color: transparent;
+    font-size: inherit;
+    cursor: pointer;
+
+    &:focus-within {
+        cursor: text;
+    }
+}

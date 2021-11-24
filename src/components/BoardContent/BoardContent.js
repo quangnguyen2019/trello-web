@@ -61,12 +61,26 @@ export default function BoardContent() {
         }
     }
 
-    const toggleOpenNewColumnForm = () => {
-        setIsOpenNewColumnForm(!isOpenNewColumnForm);
+    const onUpdateColumn = (columnToUpdate) =>  {
+        const newColumns = [...columns];
+        
+        const colIdToUpdate = columnToUpdate.id;
+        const colIndexToUpdate = newColumns.findIndex(col => col.id === colIdToUpdate);
+        
+        if (columnToUpdate._destroy) {
+            newColumns.splice(colIndexToUpdate, 1);
+        } else {
+            newColumns.splice(colIndexToUpdate, 1, columnToUpdate);
+        }
+
+        let newBoard = {...board, columns: newColumns};
+
+        setColumns(newColumns);
+        setBoard(newBoard);
     }
 
-    const changeNewColumnTitle = (e) => {
-        setNewColumnTitle(e.target.value);
+    const toggleOpenNewColumnForm = () => {
+        setIsOpenNewColumnForm(!isOpenNewColumnForm);
     }
 
     const addNewColumn = () => {
@@ -114,7 +128,11 @@ export default function BoardContent() {
             >
                 { columns.map((col, index) => 
                     <Draggable key={index}>
-                        <Column column={col} onCardDrop={onCardDrop} />
+                        <Column 
+                            column={col} 
+                            onCardDrop={onCardDrop} 
+                            onUpdateColumn={onUpdateColumn}
+                        />
                     </Draggable>
                 )}
             </Container>
@@ -134,7 +152,7 @@ export default function BoardContent() {
                                 type="text" 
                                 placeholder="Enter column title..." 
                                 value={newColumnTitle}
-                                onChange={changeNewColumnTitle}
+                                onChange={e => setNewColumnTitle(e.target.value)}
                                 onKeyPress={e => (e.key === 'Enter') && addNewColumn()}
                             />
                             <div className="actions">
