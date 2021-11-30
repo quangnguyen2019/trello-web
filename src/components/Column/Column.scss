@@ -1,6 +1,7 @@
 @import '_setting';
 
 $header-footer-height: 44px;
+$footer-hidden-height: 10px; // height of footer when it's hidden
 $column-height: calc(#{$board-content-height} - #{$gap * 2});
 
 .column {
@@ -92,6 +93,10 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
         }
     }
 
+    .footer-hidden {
+        height: $footer-hidden-height;
+    }
+
     .card-list {
         list-style: none;
         margin: 0;
@@ -113,6 +118,10 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
             border-radius: 10px;
         }
 
+        &.card-list-extend {
+            max-height: calc(100% - #{$header-footer-height} - #{$footer-hidden-height});
+        }
+
         .card-ghost {
             transition: transform 0.18s ease;
             transform: rotateZ(5deg);
@@ -129,6 +138,28 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
             background-color: rgba(150, 150, 200, 0.1);
             border: 1px dashed #abc;
             margin: 5px;
+        }
+
+        .form-add-new-card {
+            .textarea {
+                min-height: 80px;
+                max-height: 162px;
+            }
+
+            .actions {
+                display: flex;
+                align-items: center;
+
+                .btn-close-form {
+                    border: none;
+                    padding: 0;
+                    margin-left: 20px;
+
+                    .icon-remove {
+                        margin-left: 0;
+                    }
+                }
+            }
         }
     }
 }

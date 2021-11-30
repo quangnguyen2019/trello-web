@@ -30,3 +30,36 @@ body {
         cursor: text;
     }
 }
+
+i.icon-remove {
+    font-size: 20px;
+    margin-left: 20px;
+    opacity: .6;
+    cursor: pointer;
+    transition: all .15s;
+
+    &:hover {
+        opacity: .8;
+    }
+}
+
+/** CLASSES OF EXTERNAL PACKAGES AND FRAMEWORKS */
+.form-control { // Class of Bootstrap
+    margin-bottom: 5px;
+    font-size: 15px;
+
+    &:focus {
+        box-shadow: none;
+    }
+}
+
+.btn {  // Class of Bootstrap
+    padding: 5px 13px;
+    box-shadow: none !important;
+}
+
+.smooth-dnd-container {
+    min-height: 0 !important;
+    min-width: 0;
+}
+/** /////////////////////////////////////////// */

@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { Container, Draggable } from 'react-smooth-dnd';
-import { Dropdown, Form } from 'react-bootstrap';
+import { Dropdown, Form, Button } from 'react-bootstrap';
 import classNames from 'classnames';
 
 import Card from 'components/Card/Card';
@@ -15,14 +15,24 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
     const [showModal, setShowModal] = useState(false);
     const [columnTitle, setColumnTitle] = useState('');
     const [isFocus, setIsFocus] = useState(false);
+    const [isOpenNewCardForm, setIsOpenNewCardForm] = useState(false);
+    const [contentTextarea, setContentTextarea] = useState('');
 
     // store prev title column.
     // restore column title when input value is empty and user clicks outside input field
     const prevTitleRef = useRef(column.title);
+    const textareaRef = useRef(null);
 
     useEffect(() => {
         setColumnTitle(column.title);
     }, [column.title]);
+
+    useEffect(() => {
+        if (textareaRef.current) {
+            textareaRef.current.focus();
+            textareaRef.current.scrollIntoView({ behavior: "smooth" });
+        }
+    }, [isOpenNewCardForm]);
 
     const pressEnter = (e) => {
         const inputValue = e.target.value.trim();
@@ -71,6 +81,54 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
         setShowModal(false);
     }
 
+    const toggleOpenNewCardForm = () => {
+        setIsOpenNewCardForm(!isOpenNewCardForm);
+    }
+
+    const addNewCard = (e) => {
+        if (!contentTextarea) {
+            textareaRef.current.focus();
+            return;
+        }
+
+        const newCard = {
+            id:  Math.random().toString(36).substr(2,5),
+            boardId: column.boardId,
+            columnId: column.id,
+            title: contentTextarea.trim(),
+            cover: null
+        }
+
+        const newColumn = {
+            ...column,
+            cardOrder: [...column.cardOrder, newCard.id],
+            cards: [...column.cards, newCard]
+        };
+        
+        onUpdateColumn(newColumn);
+        toggleOpenNewCardForm();
+        setContentTextarea('')
+    }
+
+    const pressEnterTextarea = (e) => {
+        if (e.key === "Enter") {
+            e.preventDefault(); // prevent line breaks
+            addNewCard();
+        }
+    }
+
+    const onBlurNewCardForm = (e) => {
+        if(!e.currentTarget.contains(e.relatedTarget)) {
+            toggleOpenNewCardForm();
+            addNewCard();
+        }
+    }
+    
+    const closeNewCardForm = () => {
+        setContentTextarea('');
+        toggleOpenNewCardForm();
+    }
+
     return(
         <div className="column">
             <header className={classNames({
@@ -93,7 +151,9 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
                     <Dropdown>
                         <Dropdown.Toggle className="dropdown-btn" id="dropdown-basic" size="sm" />
                         <Dropdown.Menu>
-                            <Dropdown.Item>Add card...</Dropdown.Item>
+                            <Dropdown.Item onClick={toggleOpenNewCardForm}>
+                                Add card...
+                            </Dropdown.Item>
                             <Dropdown.Item onClick={() => setShowModal(true)}>
                                 Remove column...
                             </Dropdown.Item>
@@ -102,7 +162,10 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
                     </Dropdown>
                 </div>
             </header>
-            <div className="card-list">
+
+            <div className={classNames('card-list',{
+                'card-list-extend': isOpenNewCardForm
+            })}>
                 <Container
                     groupName="col"
                     onDrop={dropResult => onCardDrop(column.id, dropResult)}
@@ -122,12 +185,40 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
                         </Draggable>
                     )}
                 </Container>
+
+                {
+                    isOpenNewCardForm &&
+                    <div 
+                        className="form-add-new-card" 
+                        onBlur={onBlurNewCardForm}
+                    >
+                        <Form.Control 
+                            as="textarea" 
+                            placeholder="Enter a title for this card..."
+                            className="textarea"
+                            ref={textareaRef}
+                            value={contentTextarea}
+                            onChange={e => setContentTextarea(e.target.value)}
+                            onKeyPress={pressEnterTextarea}
+                        />
+                        <div className="actions">
+                            <Button size="sm" onClick={addNewCard}> Add Card </Button>
+                            <button className="btn-close-form" onClick={closeNewCardForm}>
+                                <i className="fa fa-times icon-remove" /> 
+                            </button>
+                        </div>
+                    </div>
+                }
             </div>
-            <footer>
-                <div className="footer-actions">
-                    <i className="fa fa-plus icon" /> 
-                    <span> Add another card </span>
-                </div>
+
+            <footer className={classNames({ "footer-hidden": isOpenNewCardForm })}>
+                {
+                    !isOpenNewCardForm &&                    
+                    <div className="footer-actions" onClick={toggleOpenNewCardForm}>
+                        <i className="fa fa-plus icon" />
+                        <span> Add another card </span>
+                    </div>
+                }
             </footer>
 
             <ConfirmModal
