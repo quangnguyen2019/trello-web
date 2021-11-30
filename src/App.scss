@@ -43,6 +43,7 @@ i.icon-remove {
     }
 }
 
+/** CLASSES OF EXTERNAL PACKAGES AND FRAMEWORKS */
 .form-control { // Class of Bootstrap
     margin-bottom: 5px;
     font-size: 15px;
@@ -56,3 +57,9 @@ i.icon-remove {
     padding: 5px 13px;
     box-shadow: none !important;
 }
+
+.smooth-dnd-container {
+    min-height: 0 !important;
+    min-width: 0;
+}
+/** /////////////////////////////////////////// */

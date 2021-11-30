@@ -1,7 +1,7 @@
 @import '_setting';
 
 $header-footer-height: 44px;
-$footer-hidden-height: 10px;
+$footer-hidden-height: 10px; // height of footer when it's hidden
 $column-height: calc(#{$board-content-height} - #{$gap * 2});
 
 .column {
@@ -149,6 +149,16 @@ $column-height: calc(#{$board-content-height} - #{$gap * 2});
             .actions {
                 display: flex;
                 align-items: center;
+
+                .btn-close-form {
+                    border: none;
+                    padding: 0;
+                    margin-left: 20px;
+
+                    .icon-remove {
+                        margin-left: 0;
+                    }
+                }
             }
         }
     }

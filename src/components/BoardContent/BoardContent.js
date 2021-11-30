@@ -109,6 +109,12 @@ export default function BoardContent() {
         setIsOpenNewColumnForm(false);
     }
 
+    const onBlurAddColumnForm = (e) => {
+        if(!e.currentTarget.contains(e.relatedTarget)) {
+            toggleOpenNewColumnForm();
+        }
+    }
+
     if (isEmpty(board)) {
         return <div className="not-found">Board not found</div>
     }
@@ -146,7 +152,7 @@ export default function BoardContent() {
                         </Col>
                     </Row> :
                     <Row>
-                        <Col className="form-add-column">
+                        <Col className="form-add-column" onBlur={onBlurAddColumnForm}>
                             <Form.Control 
                                 ref={inputEl} 
                                 type="text" 

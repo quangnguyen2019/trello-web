@@ -112,9 +112,21 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
 
     const pressEnterTextarea = (e) => {
         if (e.key === "Enter") {
-            e.preventDefault();
+            e.preventDefault(); // prevent line breaks
             addNewCard();
         }
+    }
+
+    const onBlurNewCardForm = (e) => {
+        if(!e.currentTarget.contains(e.relatedTarget)) {
+            toggleOpenNewCardForm();
+            addNewCard();
+        }
+    }
+    
+    const closeNewCardForm = () => {
+        setContentTextarea('');
+        toggleOpenNewCardForm();
     }
 
     return(
@@ -176,7 +188,10 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
 
                 {
                     isOpenNewCardForm &&
-                    <div className="form-add-new-card">
+                    <div 
+                        className="form-add-new-card" 
+                        onBlur={onBlurNewCardForm}
+                    >
                         <Form.Control 
                             as="textarea" 
                             placeholder="Enter a title for this card..."
@@ -188,10 +203,9 @@ export default function Column({ column, onCardDrop, onUpdateColumn }) {
                         />
                         <div className="actions">
                             <Button size="sm" onClick={addNewCard}> Add Card </Button>
-                            <i 
-                                className="fa fa-times icon-remove"
-                                onClick={toggleOpenNewCardForm}
-                            />
+                            <button className="btn-close-form" onClick={closeNewCardForm}>
+                                <i className="fa fa-times icon-remove" /> 
+                            </button>
                         </div>
                     </div>
                 }
